@@ -69,3 +69,14 @@ export const fetchPics = async (username) => {
     let u = await User.findOne({username: username})
     return {profile: u.profile, cover: u.cover}
 }
+export const fetchTotals = async(username) => {
+    await dbConnect()
+    let u_id = await User.findOne({username: username})
+    let data = await Payments.find({to_user: u_id}).lean()
+    let total = 0
+    for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        total += element.amount
+    }
+    return {total: total, count: data.length}
+}

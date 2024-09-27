@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Script from 'next/script'
-import { initiate, fetchData, fetchPics } from '../actions/useractions'
+import { initiate, fetchData, fetchPics, fetchTotals } from '../actions/useractions'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { ToastContainer } from 'react-toastify'
@@ -15,8 +15,10 @@ const PaymentsPage = (params) => {
     const [error, setError] = useState("")
     const [payments, setPayments] = useState([])
     const [pics, setPics] = useState({ profile: "", cover: "" })
+    const [stats, setStats] = useState({total: 0, count: 0})
     useEffect(() => {
         getData()
+        fetchData()
         generatePics()
     }, [])
     const generatePics = async () => {
@@ -89,8 +91,8 @@ const PaymentsPage = (params) => {
     }
     const getData = async () => {
         let donations = await fetchData(params.username)
-        console.log(donations);
-
+        let totals = await fetchTotals(params.username)
+        setStats(totals)
         setPayments(donations)
     }
     return (
@@ -113,14 +115,14 @@ const PaymentsPage = (params) => {
             <div className='text-white'>
                 <div className="cover w-full relative h-[400px]">
                     <img className='object-cover w-full h-[350px]' src={pics.cover} alt="" />
-                    <div className="absolute bottom-0 right-[33%] sm:right-[38%] md:right-[46%]">
+                    <div className="absolute bottom-0 w-full flex justify-center">
                         <img className='rounded-full relative' height={100} width={100} src={pics.profile} alt="" />
                     </div>
                 </div>
                 <div className="info text-white flex flex-col items-center my-3 gap-2">
-                    <h1 className="text-3xl font-semibold">@{params.username}</h1>
-                    <div className='text-slate-400'>Creating Animated art for VTTs</div>
-                    <div className='text-slate-400'>13,385 members &#8226;  87 posts &#8226; $17,710 raised</div>
+                    <h1 className="text-xl sm:text-3xl font-semibold">@{params.username}</h1>
+                    <div className='text-slate-400 text-center mx-2'>Creating Animated art for VTTs</div>
+                    <div className='text-slate-400 text-center mx-2'>{stats.count} donations &#8226; {stats.total} raised</div>
                 </div>
                 <div className='flex flex-col md:flex-row justify-center gap-3'>
                     <div className="supporters md:w-full mx-4 my-3 bg-slate-900 rounded-lg p-3 px-5">

@@ -81,7 +81,7 @@ const Page = () => {
 />
                 {/* Same as */}
                 <ToastContainer />
-                <div className="flex justify-center text-white">
+                <div className="flex justify-center text-white mx-2">
                     <div className='space-y-3 mt-3'>
                         <h1 className='text-3xl font-semibold'>Welcome to your Dashboard</h1>
                         <form className='flex flex-col gap-2' action="" autocomplete="off">
