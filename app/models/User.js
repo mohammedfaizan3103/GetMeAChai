@@ -5,7 +5,7 @@ const schema = new mongoose.Schema({
     email: {type: String, required: true},
     username: {type: String},
     profile: {type: String},
-    cover: {type: String},
+    cover: {type: String, default: "default_banner.png"},
     razorPayId: {type: String, default: ""},
     secret: {type: String, default: ""},
     createdAt: { type: Date, default: Date.now },
