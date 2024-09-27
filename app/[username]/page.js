@@ -11,7 +11,6 @@ const Page = async ({ params }) => {
     await dbConnect()
     let u = await User.findOne({username: params.username})
     if(!u) {
-        await mongoose.connection.close();
         return notFound()
     }
     return (
