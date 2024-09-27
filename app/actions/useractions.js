@@ -24,11 +24,8 @@ export const initiate = async (amount, to_user_email, from_user, message) => {
     //     currency: 'INR'
     // }
     // let x = instance.orders.create(options)
-    // console.log(to_user_email);
     const currentUser = await User.findOne({ username: to_user_email })
     let n = await User.findOne({_id: from_user})
-    
-    // console.log(JSON.stringify(currentUser));
     Payments.create({amount: amount, from_user: from_user, to_user: currentUser._id, message: message, status: true, from_name: n.name})
     return true;
 }
@@ -37,7 +34,6 @@ export const fetchData = async (username) => {
     await dbConnect()
     let u_id = await User.findOne({username: username})
     let data = await Payments.find({to_user: u_id}).sort({amount: -1}).limit(10).lean()
-    // console.log((data));
     return data
     
 }
@@ -56,7 +52,6 @@ export const updateUser = async (form, oldUsername) => {
             return {error: "Username already exists"}
         }
     }
-    console.log(form);
     
     await User.updateOne({username: oldUsername}, form)
     await User.updateOne({username: oldUsername}, {updated: Date.now()})
@@ -86,7 +81,6 @@ export const getAllUsers = async () => {
     for (let i = 0; i < data.length; i++) {
         let totals = await fetchTotals(data[i].username)
         data[i] = {...data[i], total: totals.total, count: totals.count}
-        console.log(data[i])
     }
     data.sort((a, b) => b.count - a.count);
     return(data)

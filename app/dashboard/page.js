@@ -18,7 +18,6 @@ const Page = () => {
     const get = async () => {
         if (session) {
             let u = await fetchUserData(session.user.username);
-            // console.log(u);
             setUser(u)
             setOriginal(u)
         }
@@ -26,10 +25,8 @@ const Page = () => {
     const handleSubmit = async () => {
         update()
         let response = await updateUser(user, session.user.username)
-        console.log(response.error === "");
         if (response.error) {
             setError(response.error)
-            console.log(original);
             setUser(original)
         }
         else {
@@ -54,7 +51,7 @@ const Page = () => {
     }
 
     useEffect(() => {
-        document.title = `Dashboard`
+        document.title = `Dashboard - Get Me A Chai`
         if (session) {
             console.log(session);
         }

@@ -7,17 +7,16 @@ const SearchPage = () => {
     // const [searchInput, setSearchInput] = useState('');
     const [users, setUsers] = useState([]);
     useEffect(() => {
+      document.title = "Top Users - Get Me A Chai"
       getdata_users()
     }, [])
     const getdata_users = async () => {
         let x = await getAllUsers()
         setUsers(x)
-        console.log(x);
     }
-    const handleSearch = () => {
-        // Implement search logic here
-        console.log('Searching for:', searchInput);
-    };
+    // const handleSearch = () => {
+    //     // Implement search logic here
+    // };
 
     return (
         <div className="min-h-screen text-white py-10 px-5">
@@ -44,7 +43,7 @@ const SearchPage = () => {
                 <div className="flex justify-center">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {users.map((user) => (
-                            <Link href={`/${user.username}`}>
+                            <Link key={user._id} href={`/${user.username}`}>
                                 <div key={user.id} className="bg-gray-800 rounded-lg p-5 shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:shadow-lg h-full">
                                     <img
                                         src={user.profile}

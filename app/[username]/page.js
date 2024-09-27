@@ -6,7 +6,6 @@ import mongoose from 'mongoose';
 import dbConnect from '../db';
 
 const Page = async ({ params }) => {
-    // console.log(params);
     // const client = await mongoose.connect(`${process.env.MONGO_URI}/chai`)
     await dbConnect()
     let u = await User.findOne({username: params.username})

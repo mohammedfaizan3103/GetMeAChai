@@ -19,10 +19,6 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      // console.log("User: " + JSON.stringify(user, null, 2));
-      // console.log("Account: " + JSON.stringify(account, null, 2));
-      // console.log("Profile: " + JSON.stringify(profile, null, 2));
-      // console.log(email);
 
       // const client = await mongoose.connect('mongodb://localhost:27017/chai')
       await dbConnect()
