@@ -80,3 +80,15 @@ export const fetchTotals = async(username) => {
     }
     return {total: total, count: data.length}
 }
+export const getAllUsers = async () => {
+    await dbConnect()
+    let data = await User.find({}).lean()
+    for (let i = 0; i < data.length; i++) {
+        let totals = await fetchTotals(data[i].username)
+        data[i] = {...data[i], total: totals.total, count: totals.count}
+        console.log(data[i])
+    }
+    data.sort((a, b) => b.count - a.count);
+    return(data)
+    
+}

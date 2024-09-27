@@ -16,8 +16,11 @@ const Navbar = () => {
   return (
     <nav className='bg-gray-900 px-4 py-4 text-white flex flex-col sm:flex-row justify-between md:justify-around items-center'>
       <h1 className='font-bold text-2xl p-2 cursor-pointer'>
-        <Link href={"/"}>
-          GetMeAChai
+        <Link className='flex items-center' href={"/"}>
+          <img src="favicon.ico" alt="" />
+          <p>
+            GetMeAChai
+          </p>
         </Link>
       </h1>
       <ul className='flex gap-4 items-center'>
