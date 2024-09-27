@@ -3,6 +3,7 @@ import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from 'next-auth/providers/google'
 import mongoose from "mongoose"
 import User from '@/app/models/User'
+import dbConnect from '@/app/db'
 
 
 const handler = NextAuth({
@@ -23,7 +24,8 @@ const handler = NextAuth({
       // console.log("Profile: " + JSON.stringify(profile, null, 2));
       // console.log(email);
 
-      const client = await mongoose.connect('mongodb://localhost:27017/chai')
+      // const client = await mongoose.connect('mongodb://localhost:27017/chai')
+      await dbConnect()
       const currentUser = await User.findOne({ email: user.email })
       if (!currentUser) {
         const newUser = new User({
@@ -37,7 +39,8 @@ const handler = NextAuth({
       return true
     },
     async session({ session, token, user }) {
-      const client = await mongoose.connect('mongodb://localhost:27017/chai')
+      // const client = await mongoose.connect('mongodb://localhost:27017/chai')
+      await dbConnect()
       const currentUser = await User.findOne({ email: session.user.email })
       session.user.username = currentUser.username
       session.user.mongo_id = currentUser._id

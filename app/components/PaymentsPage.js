@@ -119,7 +119,7 @@ const PaymentsPage = (params) => {
                 </div>
                 <div className="info text-white flex flex-col items-center my-3 gap-2">
                     <h1 className="text-3xl font-semibold">@{params.username}</h1>
-                    <div className='text-slate-400'>Creating Animated art for VTT's</div>
+                    <div className='text-slate-400'>Creating Animated art for VTTs</div>
                     <div className='text-slate-400'>13,385 members &#8226;  87 posts &#8226; $17,710 raised</div>
                 </div>
                 <div className='flex flex-col md:flex-row justify-center gap-3'>

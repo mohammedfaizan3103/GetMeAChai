@@ -3,9 +3,11 @@ import Razorpay from "razorpay"
 import Payments from "../models/Payments"
 import User from "../models/User"
 import mongoose from "mongoose"
+import dbConnect from "../db"
 
 export const initiate = async (amount, to_user_email, from_user, message) => {
-    const client = await mongoose.connect('mongodb://localhost:27017/chai')
+    // const client = await mongoose.connect(`${process.env.MONGO_URI}/chai`)
+    await dbConnect()
     // var instance = new Razorpay({ key_id: process.env.KEY_ID, key_secret: process.env.KEY_SECRET})
 
     // // instance.orders.create({
@@ -31,7 +33,8 @@ export const initiate = async (amount, to_user_email, from_user, message) => {
     return true;
 }
 export const fetchData = async (username) => {
-    const client = await mongoose.connect('mongodb://localhost:27017/chai')
+    // const client = await mongoose.connect(`${process.env.MONGO_URI}/chai`)
+    await dbConnect()
     let u_id = await User.findOne({username: username})
     let data = await Payments.find({to_user: u_id}).sort({amount: -1}).limit(10).lean()
     // console.log((data));
@@ -39,12 +42,14 @@ export const fetchData = async (username) => {
     
 }
 export const fetchUserData = async (username) => {
-    const client = await mongoose.connect('mongodb://localhost:27017/chai')
+    // const client = await mongoose.connect(`${process.env.MONGO_URI}/chai`)
+    await dbConnect()
     let u = await User.findOne({username: username}).lean()
     return {name: u.name, username: u.username, profile: u.profile, cover: u.cover, razorPayId: u.razorPayId, secret: u.secret}
 }
 export const updateUser = async (form, oldUsername) => {
-    const client = await mongoose.connect('mongodb://localhost:27017/chai')
+    // const client = await mongoose.connect(`${process.env.MONGO_URI}/chai`)
+    await dbConnect()
     if(oldUsername !== form.username) {
         let u = await User.findOne({username: form.username})
         if(u) {
@@ -59,7 +64,8 @@ export const updateUser = async (form, oldUsername) => {
     // let u = await User.findOne({username: oldUsername})
 }
 export const fetchPics = async (username) => {
-    const client = await mongoose.connect('mongodb://localhost:27017/chai')
+    // const client = await mongoose.connect(`${process.env.MONGO_URI}/chai`)
+    await dbConnect()
     let u = await User.findOne({username: username})
     return {profile: u.profile, cover: u.cover}
 }

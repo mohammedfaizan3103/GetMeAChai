@@ -3,12 +3,15 @@ import PaymentsPage from '../components/PaymentsPage';
 import { notFound } from 'next/navigation';
 import User from '../models/User';
 import mongoose from 'mongoose';
+import dbConnect from '../db';
 
-const page = async ({ params }) => {
+const Page = async ({ params }) => {
     // console.log(params);
-    const client = await mongoose.connect('mongodb://localhost:27017/chai')
+    // const client = await mongoose.connect(`${process.env.MONGO_URI}/chai`)
+    await dbConnect()
     let u = await User.findOne({username: params.username})
     if(!u) {
+        await mongoose.connection.close();
         return notFound()
     }
     return (
@@ -23,4 +26,4 @@ export async function generateMetadata({ params }) {
     }
   }
  
-export default page
+export default Page

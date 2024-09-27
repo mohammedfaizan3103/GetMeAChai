@@ -9,8 +9,8 @@ import { Bounce } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const page = () => {
-
+const Page = () => {
+    const router = useRouter()
     const { data: session, update } = useSession()
     const [user, setUser] = useState({})
     const [error, setError] = useState("")
@@ -54,14 +54,14 @@ const page = () => {
     }
 
     useEffect(() => {
-        document.title = `Dashboard ${session.user.username}`
+        document.title = `Dashboard`
         if (session) {
             console.log(session);
         }
         get()
     }, [])
     if (!session) {
-        const router = useRouter()
+        
         router.push("/login")
     }
     if (session) {
@@ -125,4 +125,4 @@ const page = () => {
     }
 }
 
-export default page
+export default Page
